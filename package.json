@@ -1,5 +1,8 @@
 {
   "name": "my-mobile-financial-app",
+  "author": {
+    "name": "Trong"
+  },
   "version": "1.0.0",
   "main": "index.ts",
   "scripts": {
@@ -9,15 +12,26 @@
     "web": "expo start --web"
   },
   "dependencies": {
-    "expo": "~52.0.46",
-    "expo-status-bar": "~2.0.1",
+    "@google/genai": "^0.10.0",
+    "@google/generative-ai": "^0.24.0",
+    "@react-native-async-storage/async-storage": "^2.1.2",
+    "@react-navigation/native": "^7.1.6",
+    "@react-navigation/stack": "^7.2.10",
+    "expo": "52.0.46",
+    "expo-status-bar": "2.0.1",
     "react": "18.3.1",
-    "react-native": "0.76.9"
+    "react-native": "0.76.9",
+    "react-native-async-storage": "^0.0.1",
+    "react-native-chart-kit": "^6.12.0",
+    "react-native-linear-gradient": "^2.8.3",
+    "react-native-pie-chart": "^4.0.1",
+    "react-native-svg": "^15.11.2",
+    "react-navigation": "^5.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.25.2",
-    "@types/react": "~18.3.12",
-    "typescript": "^5.3.3"
+    "@babel/core": "7.25.2",
+    "@types/react": "18.3.12",
+    "typescript": "5.3.3"
   },
   "private": true
 }
