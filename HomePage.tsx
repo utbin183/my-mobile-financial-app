@@ -7,145 +7,194 @@ import {
   TouchableOpacity,
   Dimensions,
   Linking,
+  FlatList,
 } from 'react-native';
 import {
   Ionicons,
   MaterialCommunityIcons,
   FontAwesome5,
-  Entypo
+  Entypo,
+  AntDesign,
 } from '@expo/vector-icons';
 
-const HomePage = ({ navigation }: any) => {
+const { width, height } = Dimensions.get('window');
+
+const ACTIONS = [
+  {
+    key: 'saving',
+    icon: <Ionicons name="wallet-outline" size={28} color="#4A4A4A" />,
+    label: 'Tiết kiệm',
+    onPress: (navigation:any, setBalance:any) => navigation.navigate('Saving'),
+  },
+  {
+    key: 'finance_data',
+    icon: <MaterialCommunityIcons name="file-chart-outline" size={28} color="#4A4A4A" />,
+    label: 'Dữ liệu tài chính',
+    onPress: (navigation:any) => navigation.navigate('Financial_Data'),
+  },
+  {
+    key: 'add_money',
+    icon: <FontAwesome5 name="money-bill-wave" size={28} color="#4A4A4A" />,
+    label: 'Nạp tiền',
+    onPress: (navigation:any, setBalance:any) => navigation.navigate('Adding_Money', { onAddMoney: (amount:any) => setBalance((prev:any) => prev + amount) }),
+  },
+  {
+    key: 'loan',
+    icon: <FontAwesome5 name="hand-holding-usd" size={28} color="#4A4A4A" />,
+    label: 'Vay tiền',
+    onPress: (navigation:any) => navigation.navigate('Owing'),
+  },
+  {
+    key: 'spending',
+    icon: <MaterialCommunityIcons name="cash-multiple" size={28} color="#4A4A4A" />,
+    label: 'Chi tiêu',
+    onPress: (navigation:any) => navigation.navigate('Expending'),
+  },
+  {
+    key: 'invest',
+    icon: <Ionicons name="bar-chart-outline" size={28} color="#4A4A4A" />,
+    label: 'Đầu tư',
+    onPress: (navigation:any) => navigation.navigate('Investing'),
+  },
+  {
+    key: 'phone',
+    icon: <Ionicons name="call" size={26} color="#4A4A4A" />,
+    label: 'Hỗ trợ',
+    onPress:() => Linking.openURL('tel:028888888')
+  },
+  {
+    key: 'security',
+    icon: <Ionicons name="shield-outline" size={28} color="#4A4A4A" />,
+    label: 'Bảo mật',
+    onPress: (navigation:any) => navigation.navigate('Security'),
+  },
+  {
+    key: 'chatbox',
+    icon: <Entypo name="chat" size={26} color="#4A4A4A" />,
+    label: 'AI Chatbox',
+    onPress: (navigation: any) => navigation.navigate('ChatBox'),
+  },
+];
+
+const Advertisement = ({ onPress }: { onPress: () => void }) => (
+  <TouchableOpacity style={styles.adContainer} activeOpacity={0.9} onPress={onPress}>
+    <View style={styles.adContent}>
+      <View style={styles.adTextContainer}>
+        <Text style={styles.adTitle}>Ưu đãi đặc biệt</Text>
+        <Text style={styles.adDescription}>
+          Gửi tiết kiệm ngay hôm nay - Nhận lãi suất ưu đãi lên đến 7%
+        </Text>
+        <View style={styles.adButton}>
+          <Text style={styles.adButtonText}>Xem ngay</Text>
+          <AntDesign name="arrowright" size={16} color="#FFF" style={{ marginLeft: 5 }} />
+        </View>
+      </View>
+      <View style={styles.adImageContainer}>
+        <MaterialCommunityIcons name="piggy-bank" size={55} color="#F05A28" />
+      </View>
+    </View>
+  </TouchableOpacity>
+);
+
+const HomePage = ({ navigation }:any) => {
   const [isVisible, setIsVisible] = useState(false);
   const [balance, setBalance] = useState(1000000);
-  const toggleVisibility = () => {
-    setIsVisible(!isVisible);
+  const toggleVisibility = () => setIsVisible((v) => !v);
+
+  const renderAction = ({ item }:any) => (
+    <TouchableOpacity
+      style={styles.actionCard}
+      activeOpacity={0.8}
+      onPress={() => item.onPress(navigation, setBalance)}
+    >
+      <View style={styles.iconWrapper}>{item.icon}</View>
+      <Text style={styles.actionLabel}>{item.label}</Text>
+    </TouchableOpacity>
+  );
+
+  const handleAdPress = () => {
+    navigation.navigate('Bonus'); 
   };
 
   return (
     <View style={styles.container}>
-       
-      {/* Background */}
       <Image
         source={require('./assets/Tower.jpg')}
         style={styles.backgroundImage}
         resizeMode="cover"
       />
+
       <View style={styles.logoWrapper}>
-                  <Text style={[styles.logoText, { color: '#F05A28' }]}>F</Text>
-                  <Text style={[styles.logoText, { color: '#522E91' }]}>INEXUS</Text>
-       </View>
-      
-      
-       <View style={styles.userContainer}>
-  <Image source={require('./assets/avatar.png')} style={styles.avatar} />
-  <View style={styles.userInfo}>
-    <Text style={styles.greeting}>Hi Duy Bảo 👋</Text>
-    <TouchableOpacity style={styles.userSection} onPress={() => alert('User section pressed')}>
-      <View style={styles.rankBox}>
-        <Text style={styles.star}>⭐</Text>
-        <Text style={styles.rankText}>THĂNG HẠNG</Text>
+        <Text style={[styles.logoText, { color: '#F05A28' }]}>F</Text>
+        <Text style={[styles.logoText, { color: '#522E91' }]}>INEXUS</Text>
       </View>
-    </TouchableOpacity>
-  </View>
-</View>
 
+      <View style={styles.userContainer}>
+        <Image source={require('./assets/avatar.png')} style={styles.avatar} />
+        <View style={styles.userInfo}>
+          <Text style={styles.greeting}>Hi Duy Bảo 👋</Text>
+          <TouchableOpacity style={styles.rankBox} onPress={() => alert('User section pressed')}>
+            <Text style={styles.star}>⭐</Text>
+            <Text style={styles.rankText}>THĂNG HẠNG</Text>
+          </TouchableOpacity>
+        </View>
+        <TouchableOpacity style={styles.notifySection} onPress={() => alert('Notify section pressed')}>
+          <Ionicons name="notifications-outline" size={24} color="#000" />
+        </TouchableOpacity>
+      </View>
 
-
-      {/* Balance section */}
       <View style={styles.balanceBox}>
         <Text style={styles.balanceTitle}>TỔNG SỐ DƯ VNĐ</Text>
-        <TouchableOpacity onPress={toggleVisibility} style={styles.eyeIcon}>
-          <Ionicons 
-            name={isVisible ? "eye" : "eye-outline"} 
-            size={20} 
-            color="gray" 
-          />
+        <TouchableOpacity style={styles.eyeIcon} onPress={toggleVisibility}>
+          <Ionicons name={isVisible ? 'eye' : 'eye-off'} size={22} color="#fff" />
         </TouchableOpacity>
-        <Text style={styles.stars}>{isVisible ? balance.toLocaleString() : '*** ***'}</Text>
+        <Text style={styles.balanceAmount}>{isVisible ? balance.toLocaleString() : '••••••'}</Text>
         <Text style={styles.currency}>VNĐ</Text>
       </View>
 
-      {/* Action buttons */}
-      <View style={styles.actionsGrid}>
-        <View style={styles.row}>
-          <TouchableOpacity style={styles.actionButton} onPress={() => navigation.navigate('Saving')}>
-            <Ionicons name="wallet-outline" size={24} color="#333" />
-            <Text style={styles.actionLabel}>Tiết kiệm</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.actionButton} onPress={() => navigation.navigate('Financial_Data')}>
-            <MaterialCommunityIcons name="file-chart-outline" size={24} color="#333" />
-            <Text style={styles.actionLabel}>Dữ liệu tài chính</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.actionButton}  onPress={() => navigation.navigate('Adding_Money',{
-            onAddMoney: (amount: number) => setBalance(balance + amount),
-          })}>
-            <FontAwesome5 name="money-bill-wave" size={24} color="#333"/>
-            <Text style={styles.actionLabel}>Nạp tiền</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.row}>
-          <TouchableOpacity style={styles.actionButton} onPress={() => navigation.navigate('Owing')}>
-            <FontAwesome5 name="hand-holding-usd" size={24} color="#333" />
-            <Text style={styles.actionLabel}>Vay tiền</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.actionButton} onPress={() => navigation.navigate('Expending')}>
-            <MaterialCommunityIcons name="cash-multiple" size={24} color="#333" />
-            <Text style={styles.actionLabel}>Chi tiêu</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.actionButton} onPress={() => navigation.navigate('Investing')}>
-            <Ionicons name="bar-chart-outline" size={24} color="#333" />
-            <Text style={styles.actionLabel}>Đầu tư</Text>
-          </TouchableOpacity>
-        </View>
+      <View style={styles.actionsContainer}>
+        <FlatList
+          data={ACTIONS}
+          renderItem={renderAction}
+          keyExtractor={(item) => item.key}
+          numColumns={3}
+          columnWrapperStyle={styles.row}
+          contentContainerStyle={styles.actionsList}
+        />
+        
+        {/* Advertisement banner below the actions grid */}
+        <Advertisement onPress={handleAdPress} />
       </View>
 
-      {/* Bottom navigation bar */}
       <View style={styles.bottomNav}>
-        <TouchableOpacity style={styles.navItem}>
-          <Ionicons name="home" size={22} color="#000" />
-          <Text style={styles.navText}>Trang chủ</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Linking')}>
-          <Ionicons name="link-outline" size={22} color="#000" />
-          <Text style={styles.navText}>Liên kết</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Bonus')}>
-          <FontAwesome5 name="gift" size={20} color="#000" />
-          <Text style={styles.navText}>Ưu đãi</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Other_card')}>
-          <FontAwesome5 name="credit-card" size={20} color="#000" />
-          <Text style={styles.navText}>Thẻ khác</Text>
-        </TouchableOpacity>
+        <BottomNavItem icon={<Ionicons name="home" size={24} color="#333" />} label="Trang chủ" />
+        <BottomNavItem icon={<Ionicons name="link-outline" size={24} color="#333" />} label="Liên kết" onPress={() => navigation.navigate('Linking')} />
+        <BottomNavItem icon={<FontAwesome5 name="gift" size={22} color="#333" />} label="Ưu đãi" onPress={() => navigation.navigate('Bonus')} />
+        <BottomNavItem icon={<FontAwesome5 name="credit-card" size={22} color="#333" />} label="Thẻ khác" onPress={() => navigation.navigate('Other_card')} />
       </View>
-  <TouchableOpacity
-  style={styles.callButton}
-  onPress={() => Linking.openURL('tel:028888888')}>
-  <Ionicons name="call" size={24} color="#2e7d32" />
-  </TouchableOpacity>
-
-<TouchableOpacity style={styles.chatButton} onPress={() => navigation.navigate('ChatBox')}>
-  <Entypo name="chat" size={24} color="#1565c0" />
-</TouchableOpacity>
-
     </View>
   );
 };
 
+const BottomNavItem = ({ icon, label, onPress }:any) => (
+  <TouchableOpacity style={styles.navItem} onPress={onPress} activeOpacity={0.7}>
+    {icon}
+    <Text style={styles.navText}>{label}</Text>
+  </TouchableOpacity>
+);
+
 export default HomePage;
 
-const { width, height } = Dimensions.get('window');
-
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+  container: { 
+    flex: 1, 
+    backgroundColor: '#F7F8FA' 
   },
   backgroundImage: {
     position: 'absolute',
-    width: width,
-    height: height,
-    opacity: 0.5,
+    width:width,
+    height:height,
+    opacity: 0.3,
   },
   logoWrapper: {
     position: 'absolute',
@@ -153,180 +202,128 @@ const styles = StyleSheet.create({
     left: 20,
     flexDirection: 'row',
     alignItems: 'center',
-},
-logoText: {
-    fontSize: 28,
-    fontWeight: 'bold',
-},
-  topBar: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingTop: 90,
-    paddingHorizontal: 20,
-    alignItems: 'center',
   },
-  topIcons: {
-    flexDirection: 'row',
+  logoText: {
+    fontSize: 30,
+    fontWeight: '900',
   },
-  icon: {
-    marginRight: 15,
-  },
-  
   userContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginTop: 110,
     paddingHorizontal: 20,
-    marginTop: 100,
-    marginBottom: 20,
   },
-  
-  avatar: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    marginRight: 12,
-  },
-  
-  userInfo: {
-    flex: 1,
-  },
-  
-  greeting: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: '#000',
-    marginBottom: 6,
-  },
-  
-  userSection: {
-    backgroundColor: '#FFF',
-    paddingVertical: 6,
-    paddingHorizontal: 12,
-    borderRadius: 8,
-    alignSelf: 'flex-start',
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  
+  avatar: { width: 60, height: 60, borderRadius: 30, marginRight: 14 },
+  userInfo: { flex: 1 },
+  greeting: { fontSize: 20, fontWeight: '700', color: '#333' },
   rankBox: {
     flexDirection: 'row',
     alignItems: 'center',
+    alignSelf: 'flex-start',
+    marginTop: 4,
+    backgroundColor: '#FFF',
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 20,
+    elevation: 2,
   },
-  
-  star: {
-    fontSize: 18,
-    marginRight: 6,
+  star: { fontSize: 18, marginRight: 6 },
+  rankText: { fontWeight: '600', color: '#333' },
+  notifySection: {
+    marginLeft: 12,
+    padding: 8,
+    backgroundColor: '#FFF',
+    borderRadius: 18,
+    elevation: 2,
   },
-  
-  rankText: {
-    fontWeight: 'bold',
-    color: '#000',
-  },
-  
   balanceBox: {
-    backgroundColor: '#fff',
-    marginHorizontal: 40,
+    backgroundColor: '#5483B3',
+    marginHorizontal: 20,
     marginTop: 30,
-    borderRadius: 15,
+    borderRadius: 20,
+    padding: 20,
+    alignItems: 'center',
+    elevation: 4,
+  },
+  balanceTitle: { fontSize: 15, color: '#fff', fontWeight: '500' },
+  eyeIcon: { position: 'absolute', top: 18, right: 18 },
+  balanceAmount: { fontSize: 28, fontWeight: 'bold', color: '#fff', marginVertical: 6 },
+  currency: { fontSize: 14, color: '#fff' },
+  actionsContainer: { flex: 1, marginTop: 20, paddingHorizontal: 10 },
+  actionsList: { paddingBottom: 20 },
+  row: { justifyContent: 'space-between', marginBottom: 15 },
+  actionCard: {
+    flex: 1,
+    marginHorizontal: 10,
+    backgroundColor: '#FFF',
+    borderRadius: 16,
+    paddingVertical: 20,
+    alignItems: 'center',
+    elevation: 3,
+  },
+  iconWrapper: {
+    backgroundColor: '#EEF2F5',
+    borderRadius: 30,
+    padding: 12,
+    marginBottom: 8,
+  },
+  actionLabel: { fontSize: 13, color: '#4A4A4A', fontWeight: '600' },
+  bottomNav: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    backgroundColor: '#FFF',
+    paddingVertical: 12,
+    borderTopWidth: 1,
+    borderTopColor: '#E2E2E2',
+  },
+  navItem: { alignItems: 'center' },
+  navText: { fontSize: 12, marginTop: 4, color: '#333', fontWeight: '500' },
+  // Advertisement styles
+  adContainer: {
+    marginHorizontal: 10,
+    marginTop: 5,
+    marginBottom: 15,
+    borderRadius: 16,
+    backgroundColor: '#FFF',
+    elevation: 3,
+    overflow: 'hidden',
+  },
+  adContent: {
+    flexDirection: 'row',
     padding: 15,
     alignItems: 'center',
-    position: 'relative',
-    shadowColor: '#000',
-    shadowOpacity: 0.15,
-    shadowOffset: { width: 0, height: 2 },
   },
-  balanceTitle: {
-    fontSize: 14,
-    color: '#555',
-    marginBottom: 5,
+  adTextContainer: {
+    flex: 3,
   },
-  stars: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  currency: {
-    fontSize: 14,
-    color: '#777',
-  },
-  eyeIcon: {
-    position: 'absolute',
-    top: 10,
-    right: 10,
-  },
-  actionsGrid: {
-    marginTop: 25,
-    marginHorizontal: 20,
-    backgroundColor: 'rgba(255,255,255,0.85)',
-    borderRadius: 15,
-    padding: 15,
-  },
-  row: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 15,
-  },
-  actionButton: {
+  adImageContainer: {
     flex: 1,
     alignItems: 'center',
-  },
-  actionLabel: {
-    fontSize: 12,
-    marginTop: 6,
-    color: '#333',
-    textAlign: 'center',
-  },
-  bottomNav: {
-    position: 'absolute',
-    bottom: 0,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    backgroundColor: '#fff',
-    width: '100%',
-    paddingVertical: 10,
-    borderTopWidth: 1,
-    borderTopColor: '#ccc',
-  },
-  navItem: {
-    alignItems: 'center',
-  },
-  navText: {
-    fontSize: 11,
-    marginTop: 4,
-    color: '#000',
-  },
-  callButton: {
-    position: 'absolute',
-    bottom: 80,
-    left: 20,
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    backgroundColor: '#fff',
     justifyContent: 'center',
+  },
+  adTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#522E91',
+    marginBottom: 5,
+  },
+  adDescription: {
+    fontSize: 12,
+    color: '#4A4A4A',
+    marginBottom: 10,
+  },
+  adButton: {
+    flexDirection: 'row',
+    backgroundColor: '#F05A28',
+    alignSelf: 'flex-start',
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 20,
     alignItems: 'center',
-    shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 4,
-    elevation: 3,
-},
-
-chatButton: {
-  position: 'absolute',
-  bottom: 80,
-  right: 20,
-  width: 50,
-  height: 50,
-  borderRadius: 25,
-  backgroundColor: '#fff',
-  justifyContent: 'center',
-  alignItems: 'center',
-  shadowColor: '#000',
-  shadowOpacity: 0.1,
-  shadowOffset: { width: 0, height: 2 },
-  shadowRadius: 4,
-  elevation: 3,
-},
-
-  
+  },
+  adButtonText: {
+    color: '#FFF',
+    fontSize: 12,
+    fontWeight: '600',
+  },
 });

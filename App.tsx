@@ -16,6 +16,8 @@ import LinkingScreen from './LinkingPage';
 import BonusScreen from './BonusPage';
 import OtherCardScreen from './OtherCardPage';
 import ChatBoxScreen from './ChatBoxPage';
+import OTPScreen from './OTPPage';
+import SecurityScreen from './SecurityPage';
 const Stack = createStackNavigator();
 export default function App() {
   return (
@@ -35,6 +37,8 @@ export default function App() {
         <Stack.Screen name="Bonus" component={BonusScreen}/>
         <Stack.Screen name="Other_card" component={OtherCardScreen}/>
         <Stack.Screen name="ChatBox" component={ChatBoxScreen}/>
+        <Stack.Screen name="OTPPage" component={OTPScreen}/>
+        <Stack.Screen name="Security" component={SecurityScreen}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

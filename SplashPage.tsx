@@ -1,8 +1,37 @@
-import React from 'react';
+import React, {useState, useEffect } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import type { NavigationProp } from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
 const SplashPage = ({ navigation }: { navigation: NavigationProp<any> }) => {
+    const [greeting, setGreeting] = useState<string>('');
+    const getGreeting = (): string => {
+        const now = new Date();
+        const hourString =now.toLocaleTimeString('en-US',{
+            timeZone: 'Asia/Ho_Chi_Minh',
+            hour12:false,
+            hour: '2-digit',
+        });
+        const hour = parseInt(hourString,10);
+        if(hour >= 5 && hour <11){
+            return 'Chào buổi sáng!';
+        }
+        else if(hour >=11 && hour <13){
+            return 'Chào buổi trưa!';
+        }
+        else if(hour>=13 && hour<18){
+            return 'Chào buổi chiều!';
+        }
+        else{
+            return 'Chào buổi tối!';
+        }
+    };
+    useEffect(() =>{
+        setGreeting(getGreeting());
+        const timer = setInterval(() =>{
+            setGreeting(getGreeting());
+        }, 60 * 1000);
+        return () => clearInterval(timer);
+    }, []);
     return (
         <View style={styles.container}>
             {/* Background */}
@@ -12,13 +41,17 @@ const SplashPage = ({ navigation }: { navigation: NavigationProp<any> }) => {
                 resizeMode="contain"
                 
             />
-
+             {/* Morning Greeting */}
+             <Text style={styles.greetingText}>{greeting}</Text>
             {/* Logo */}
             <View style={styles.logoWrapper}>
                 <Text style={[styles.logoText, { color: '#F05A28' }]}>F</Text>
                 <Text style={[styles.logoText, { color: '#522E91' }]}>INEXUS</Text>
             </View>
             
+            {/*Save and invest together!*/}
+            <Text style={styles.taglineText}>Save and invest together!</Text>
+
             {/* Nút đăng ký và đăng nhập */}
             <View style={styles.footerContainer}>
                 <TouchableOpacity 
@@ -47,16 +80,34 @@ const styles = StyleSheet.create({
         alignItems: 'center',
        
     },
-    logoWrapper: {
+    greetingText: {
         position: 'absolute',
         top: 50,
-        left: 20,
+        left: 15,
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: '#522E91',
+        textAlign: 'center',
+        fontStyle: 'italic'
+    },
+    logoWrapper: {
+        position: 'absolute',
+        top: 300,
         flexDirection: 'row',
         alignItems: 'center',
     },
     logoText: {
-        fontSize: 28,
+        fontSize: 80,
         fontWeight: 'bold',
+    },
+    taglineText: {
+        position: 'absolute',
+        top: 400,
+        fontSize: 24,
+        fontWeight: '600',
+        color: '#F05A28',
+        textAlign: 'center',
+        fontStyle: 'italic'
     },
     footerContainer: {
         backgroundColor: 'rgba(255, 255, 255, 0.5)',

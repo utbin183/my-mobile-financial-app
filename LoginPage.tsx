@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, Dimensions } from 'react-native';
 
 const LoginPage = ({ navigation }: any) => {
-  const [username, setUserName] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUserName] = useState('admin');
+  const [password, setPassword] = useState('123456');
 
   const handleLogin = () => {
-    alert('Đăng nhập thành công!');
-    navigation.navigate('HomePage');
+    const generatedOTP = Math.floor(100000 + Math.random() * 900000).toString();
+    console.log(`OTP gửi đến thiết bị khác: ${generatedOTP}`);
+    navigation.navigate('OTPPage',{generatedOTP});
   };
 
   return (
@@ -104,6 +105,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F58700',
     paddingVertical: 12,
     borderRadius: 20,
+    borderWidth: 1,
     borderColor: '#000',
     marginTop: 10,
     marginBottom: 10,

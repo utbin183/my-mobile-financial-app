@@ -120,6 +120,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F58700',
     paddingVertical: 12,
     borderRadius: 20,
+    borderWidth: 1,
     borderColor: '#000',
     marginTop: 10,
     marginBottom: 10,
