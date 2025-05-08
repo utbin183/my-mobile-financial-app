@@ -36,7 +36,7 @@ const SplashPage = ({ navigation }: { navigation: NavigationProp<any> }) => {
         <View style={styles.container}>
             {/* Background */}
             <Image 
-                source={require('./assets/Tower.jpg')} 
+                source={require('../assets/Tower.jpg')} 
                 style={{ width: 700, height: 1000, opacity:0.5 }}
                 resizeMode="contain"
                 

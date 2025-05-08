@@ -5,29 +5,26 @@ import { Ionicons } from '@expo/vector-icons';
 
 const { width } = Dimensions.get('window');
 
-const OtherCardPage = () => {
+const LinkingPage = () => {
   const navigation = useNavigation();
   const banks = [
-    { name: 'HSBC', logo: require('./assets/logo-hsbc.png'), url: 'https://www.hsbc.com' },
-    { name: 'Citibank', logo: require('./assets/logo-citibank.png'), url: 'https://www.citibank.com' },
-    { name: 'Standard Chartered', logo: require('./assets/logo-standart-chartered.png'), url: 'https://www.sc.com' },
-    { name: 'ANZ', logo: require('./assets/logo-anz.png'), url: 'https://www.anz.com' },
-    { name: 'DBS Bank', logo: require('./assets/logo-dbs.png'), url: 'https://www.dbs.com' },
-    { name: 'OCBC', logo: require('./assets/ocbc-logo.png'), url: 'https://www.ocbc.com' },
-    { name: 'Bank of America', logo: require('./assets/bank-of-america-logo.png'), url: 'https://www.bankofamerica.com' },
-    { name: 'J.P. Morgan', logo: require('./assets/logo-jp-morgan.png'), url: 'https://www.jpmorganchase.com' },
-    { name: 'Barclays', logo: require('./assets/logo-barclays.png'), url: 'https://www.barclays.co.uk' },
-    { name: 'UOB', logo: require('./assets/logo-uob.png'), url: 'https://www.uobgroup.com' },
+    { name: 'Vietcombank', logo: require('../assets/logo_vietcombank.jpg'), url: 'https://www.vietcombank.com.vn' },
+    { name: 'BIDV', logo: require('../assets/logo_bidv.png'), url: 'https://www.bidv.com.vn' },
+    { name: 'Techcombank', logo: require('../assets/logo_techcombank.jpg'), url: 'https://www.techcombank.com.vn' },
+    { name: 'MB Bank', logo: require('../assets/logo_mb_bank.jpg'), url: 'https://www.mbbank.com.vn' },
+    { name: 'VPBank', logo: require('../assets/logo_vp_bank.png'), url: 'https://www.vpbank.com.vn/ca-nhan' },
+    { name: 'ACB', logo: require('../assets/logo_ACB.jpg'), url: 'https://acb.com.vn' },
+    { name: 'Agribank', logo: require('../assets/logo_Agribank.png'), url: 'https://www.agribank.com.vn' },
+    { name: 'HDBank', logo: require('../assets/logo_HDbank.png'), url: 'https://hdbank.com.vn' },
+    { name: 'VIB', logo: require('../assets/logo_VIB.png'), url: 'https://www.vib.com.vn' },
+    { name: 'OCB', logo: require('../assets/logo_OCB.png'), url: 'https://ocb.com.vn' },
+    { name: 'Sacombank', logo: require('../assets/logo_Sacombank.png'), url: 'https://www.sacombank.com.vn' },
   ];
 
   return (
     <SafeAreaView style={styles.container}>
       {/* Background */}
-      <Image
-        source={require('./assets/Tower.jpg')}
-        style={styles.backgroundImage}
-        resizeMode="cover"
-      />
+      <Image source={require('../assets/Tower.jpg')} style={styles.backgroundImage} resizeMode="cover" />
 
       {/* Logo */}
       <View style={styles.logoWrapper}>
@@ -43,16 +40,16 @@ const OtherCardPage = () => {
       </View>
 
       {/* Title */}
-      <Text style={styles.title}>THẺ KHÁC</Text>
+      <Text style={styles.title}>LIÊN KẾT</Text>
 
       {/* Bank List */}
-      <ScrollView contentContainerStyle={styles.bankList}>
+      <ScrollView contentContainerStyle={styles.bankList} showsVerticalScrollIndicator={false}>
         {banks.map((bank, index) => (
           <TouchableOpacity
             key={index}
             style={styles.bankCard}
             onPress={() => Linking.openURL(bank.url)}
-          >
+            activeOpacity={0.8}>
             <Image source={bank.logo} style={styles.bankLogo} />
             <Text style={styles.bankName}>{bank.name}</Text>
           </TouchableOpacity>
@@ -137,4 +134,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default OtherCardPage;
+export default LinkingPage;

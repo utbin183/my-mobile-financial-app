@@ -40,7 +40,7 @@ const OTPPage = ({route, navigation}: any) => {
     return (
         <View style={styles.container}>
             <Image
-                source={require('./assets/Tower.jpg')}
+                source={require('../assets/Tower.jpg')}
                 style={styles.backgroundImage}
                 resizeMode="cover"
             />

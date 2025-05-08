@@ -14,7 +14,7 @@ const SecurityPage = () => {
     <SafeAreaView style={styles.container}>
       {/* Background */}
       <Image
-        source={require('./assets/Tower.jpg')}
+        source={require('../assets/Tower.jpg')}
         style={styles.backgroundImage}
         resizeMode="cover"
       />

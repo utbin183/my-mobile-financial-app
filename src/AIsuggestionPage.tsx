@@ -48,14 +48,14 @@ const data = [
     legendFontSize: 15,
   },
 ]
-const ExpendingPage = () => {
+const AIsuggestionPage = () => {
   const navigation = useNavigation();
   const {width: screenWidth} =useWindowDimensions();
   return (
     <SafeAreaView style={styles.container}>
       {/* Background */}
       <Image
-        source={require('./assets/Tower.jpg')}
+        source={require('../assets/Tower.jpg')}
         style={styles.backgroundImage}
         resizeMode="cover"
       />
@@ -74,7 +74,7 @@ const ExpendingPage = () => {
       </View>
 
       {/* Title */}
-      <Text style={styles.title}>CHI TIÊU</Text>
+      <Text style={styles.title}>AI GỢI Ý</Text>
       {/* Từ ngày đến ngày */}
       <View style={styles.dateRange}>
         <View style={styles.dateBox}>
@@ -109,11 +109,11 @@ const ExpendingPage = () => {
          {/* Ngân sách & Chi tiêu */}
          <View style={styles.budgetContainer}>
         <View style={styles.budgetBox}>
-          <Text style={styles.budgetLabel}>Ngân sách</Text>
+          <Text style={styles.budgetLabel}>Chi tiêu trung bình</Text>
           <Text style={styles.budgetValue}>10.000.000 VND</Text>
         </View>
         <View style={styles.budgetBox}>
-          <Text style={styles.budgetLabel}>Chi tiêu</Text>
+          <Text style={styles.budgetLabel}>Chi tiêu đề xuất</Text>
           <Text style={styles.budgetValue}>5.000.000 VND</Text>
         </View>
       </View>
@@ -254,4 +254,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default ExpendingPage;
+export default AIsuggestionPage;

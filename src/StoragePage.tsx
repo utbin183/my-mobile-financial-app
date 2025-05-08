@@ -5,24 +5,19 @@ import { Ionicons } from '@expo/vector-icons';
 
 const { width, height } = Dimensions.get('window');
 
-const AddingPage = () => {
+const StorageScreen = ({ navigation }: any) => {
   const [isVisible, setIsVisible] = useState(false);
   const [balance, setBalance] = useState(1000000);
   const toggleVisibility = () => {
     setIsVisible(!isVisible);
   };
-  const addBalance = (amount: number): void => {
-    setBalance((prev: number) => prev + amount);
-  };
-  const navigation = useNavigation();
- 
-  
+
 
   return (
     <SafeAreaView style={styles.container}>
       {/* Background */}
       <Image
-        source={require('./assets/Tower.jpg')}
+        source={require('../assets/Tower.jpg')}
         style={styles.backgroundImage}
         resizeMode="cover"
       />
@@ -41,40 +36,21 @@ const AddingPage = () => {
       </View>
 
       {/* Title */}
-      <Text style={styles.title}>NẠP TIỀN</Text>
-      {/* Balance Section */}
-      <View style={styles.balanceBox}>
-        <Text style={styles.balanceTitle}>TỔNG SỐ DƯ VNĐ</Text>
-        <TouchableOpacity onPress={toggleVisibility} style={styles.eyeIcon}>
-          <Ionicons
-            name={isVisible ? "eye" : "eye-outline"}
-            size={20}
-            color="gray"
-          />
-        </TouchableOpacity>
-        <Text style={styles.stars}>
-          {isVisible ? balance.toLocaleString() : '*** ***'}
-        </Text>
-        <Text style={styles.currency}>VNĐ</Text>
-      </View>
+      <Text style={styles.title}>LƯU TRỮ</Text>
+   
+
 <View style={styles.grid}>
-  <TouchableOpacity style={styles.rectangleButton} onPress={() => addBalance(10000)}>
-    <Text style={styles.rectangleText}> +10.000 VNĐ </Text>
+  <TouchableOpacity style={styles.circleButton}>
+    <Ionicons name="calendar" size={24} color="black" />
+    <Text style={styles.circleText}>Lịch sử giao dịch</Text>
   </TouchableOpacity>
-  <TouchableOpacity style={styles.rectangleButton} onPress={() => addBalance(20000)}>
-    <Text style={styles.rectangleText}> +20.000 VNĐ </Text>
+  <TouchableOpacity style={styles.circleButton} onPress={() => navigation.navigate("AISuggestion")}>
+    <Ionicons name="cash" size={24} color="black" />
+    <Text style={styles.circleText}>AI gợi ý</Text>
   </TouchableOpacity>
-  <TouchableOpacity style={styles.rectangleButton} onPress={() => addBalance(50000)}>
-    <Text style={styles.rectangleText}> +50.000 VNĐ </Text>
-  </TouchableOpacity>
-  <TouchableOpacity style={styles.rectangleButton} onPress={() => addBalance(100000)}>
-    <Text style={styles.rectangleText}> +100.000 VNĐ </Text>
-  </TouchableOpacity>
-  <TouchableOpacity style={styles.rectangleButton} onPress={() => addBalance(200000)}>
-    <Text style={styles.rectangleText}> +200.000 VNĐ </Text>
-  </TouchableOpacity>
-  <TouchableOpacity style={styles.rectangleButton} onPress={() => addBalance(500000)}>
-    <Text style={styles.rectangleText}> +500.000 VNĐ </Text>
+  <TouchableOpacity style={styles.circleButton} onPress={() => navigation.navigate("OtherChatBox")}>
+    <Ionicons name="cash" size={24} color="black"/>
+    <Text style={styles.circleText}>Đề xuất chi tiêu</Text>
   </TouchableOpacity>
 </View>
 
@@ -167,11 +143,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
-    marginTop: 10,
+    marginTop: 150,
   },
-  rectangleButton: {
-    width: 90,
-    height: 90,
+  circleButton: {
+    width: 150,
+    height: 150,
     borderRadius: 45,
     backgroundColor: '#f1f1f1',
     justifyContent: 'center',
@@ -179,7 +155,7 @@ const styles = StyleSheet.create({
     margin: 10,
     padding: 5,
   },
-  rectangleText: {
+  circleText: {
     fontSize: 12,
     textAlign: 'center',
     marginTop: 5,
@@ -187,4 +163,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default AddingPage;
+export default StorageScreen;

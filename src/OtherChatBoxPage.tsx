@@ -13,7 +13,7 @@ const { width } = Dimensions.get('window');
 const genAI = new GoogleGenerativeAI("AIzaSyBVIi8HpXPd1wjaGdUorLMwFexZxh3lXGM");
 const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
-const ChatBoxPage = () => {
+const OtherChatBoxPage = () => {
   const navigation = useNavigation();
   const [messages, setMessages] = useState<Message[]>([
     { id: '1', role: 'bot', content: 'Hi! I am Finexus Assistant. What do you want to ask today?' }
@@ -74,7 +74,7 @@ const ChatBoxPage = () => {
         <Text style={styles.messageText}>{item.content}</Text>
       </View>
       {item.role === 'user' && (
-        <Image source={require('./assets/avatar.png')} style={styles.avatar} />
+        <Image source={require('../assets/avatar.png')} style={styles.avatar} />
       )}
     </View>
   );
@@ -84,7 +84,7 @@ const ChatBoxPage = () => {
     <SafeAreaView style={styles.container}>
       {/* Background */}
       <Image
-        source={require('./assets/Tower.jpg')}
+        source={require('../assets/Tower.jpg')}
         style={styles.backgroundImage}
         resizeMode="cover"
       />
@@ -100,7 +100,7 @@ const ChatBoxPage = () => {
         </TouchableOpacity>
       </View>
 
-      <Text style={styles.title}>Chatbox</Text>
+      <Text style={styles.title}>Đề Xuất Chi Tiêu</Text>
 
       {/* Chat */}
       <FlatList
@@ -268,4 +268,4 @@ const styles = StyleSheet.create({
   
 });
 
-export default ChatBoxPage;
+export default OtherChatBoxPage;
